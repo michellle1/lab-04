@@ -1,5 +1,7 @@
-"""EE 250L Lab 04 Starter Code
-Run vm_sub.py in a separate terminal on your VM."""
+#Lab Partners: Michelle Arredondo and Nayeli De Leon
+#https://github.com/michellle1/lab-04
+
+"""EE 250L Lab 04 Part 2 Code"""
 
 import paho.mqtt.client as mqtt
 import time
@@ -13,8 +15,8 @@ def on_connect(client, userdata, flags, rc):
 
 
 if __name__ == '__main__':
-    #get IP address
-    ip_address=0 
+    #rpi IP address
+    ip_address=0
     """your code here"""
     #create a client object
     client = mqtt.Client()
@@ -41,11 +43,33 @@ if __name__ == '__main__':
 
     while True:
         #replace user with your USC username in all subscriptions
-        client.publish("user/ipinfo", f"{ip_address}")
+        client.publish("mearredo/ipinfo", f"{ip_address}")
         print("Publishing ip address")
         time.sleep(4)
 
         #get date and time 
-        """your code here"""
+        """your code here """
+        #getting date: (source: https://www.programiz.com/python-programming/datetime/current-datetime) 
+        
+        from datetime import date
+        today = date.today()
+        
+        #getting time: (source https://www.programiz.com/python-programming/datetime/current-time) 
+        
+        import pytz
+        
+        #getting timezone object for California
+        tz_LA = pytz.timezone('America/Los_Angeles')
+        
+        #getting current time in California
+        datetime_LA = datetime.now(tz_LA)
+        
+        t = datetime_LA.strftime("%H: %M: %S") 
+          
         #publish date and time in their own topics
         """your code here"""
+        client.publish("mearredo/date", f"{today}")
+        print("Publishing date")
+        
+        client.publish("mearredo/time", f"{t}")
+        print("Publishing time")
